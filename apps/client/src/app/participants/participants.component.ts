@@ -11,11 +11,13 @@ import { MatCardModule } from '@angular/material/card';
     </mat-card-header>
     <mat-card-content></mat-card-content>
   </mat-card>`,
-  styles: `
-  mat-card {
-    width: 60vw;
-  }
-  `,
+  styles: [
+    `
+      mat-card {
+        width: 60vw;
+      }
+    `,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ParticipantsComponent {}
