@@ -3,6 +3,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { User } from './user/entities/user.entity';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [
@@ -11,11 +13,12 @@ import { AppService } from './app.service';
       host: 'localhost',
       port: 5432,
       username: 'joelnieto',
-      entities: [],
+      entities: [User],
       database: 'pro-compliance',
       synchronize: true,
       logging: true,
     }),
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],
