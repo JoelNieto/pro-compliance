@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import * as bcrypt from 'bcrypt';
+import { DeleteResult, Repository } from 'typeorm';
 
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -11,24 +12,31 @@ export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>
   ) {}
-  create(createUserDto: CreateUserDto) {
+  public async create(createUserDto: CreateUserDto): Promise<User> {
     let user: User = new User();
     const { user_name, email, password } = createUserDto;
+    const hash_password = await bcrypt.hash(password, 10);
 
-    user = { ...user, user_name, email, password };
+    user = { ...user, user_name, email, password: hash_password };
 
     return this.userRepository.save(user);
   }
 
-  findAll() {
+  public findAll(): Promise<User[]> {
     return this.userRepository.find();
   }
 
-  findOne(id: string) {
+  public findOne(id: string): Promise<User> {
     return this.userRepository.findOneBy({ id });
   }
 
-  update(id: string, updateUserDto: UpdateUserDto) {
+  public update({
+    id,
+    updateUserDto,
+  }: {
+    id: string;
+    updateUserDto: UpdateUserDto;
+  }): Promise<User> {
     let user: User = new User();
     const { user_name, email, password } = updateUserDto;
 
@@ -36,7 +44,7 @@ export class UserService {
     return this.userRepository.save(user);
   }
 
-  remove(id: string) {
+  public remove(id: string): Promise<DeleteResult> {
     return this.userRepository.delete(id);
   }
 }

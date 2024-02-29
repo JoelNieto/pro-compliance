@@ -4,6 +4,11 @@ export const appRoutes: Route[] = [
   {
     path: '',
     loadComponent: () =>
+      import('./sign-in/sign-in.component').then((x) => x.SignInComponent),
+  },
+  {
+    path: 'app',
+    loadComponent: () =>
       import('./dashboard/dashboard.component').then(
         (x) => x.DashboardComponent
       ),
