@@ -16,31 +16,27 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
     RouterLinkActive,
   ],
   template: `<mat-drawer-container class="dashboard-container" autosize>
-    <mat-drawer
-      [class.mat-elevation-z4]="true"
-      class="app-drawer"
-      mode="side"
-      opened
-    >
-      <mat-list
-        ><a mat-list-item routerLink="/home" routerLinkActive="active-list-item"
+    <mat-drawer class="app-drawer" mode="side" opened>
+      <mat-list class="px-4"
+        ><a mat-list-item routerLink="home" routerLinkActive="active-list-item"
           >Inicio
         </a>
         <a
           mat-list-item
-          routerLink="/participants"
+          style="color: red;"
+          routerLink="participants"
           routerLinkActive="active-list-item"
           >Participantes
         </a>
         <a
           mat-list-item
-          routerLink="/reports"
+          routerLink="reports"
           routerLinkActive="active-list-item"
           >Reports
         </a>
         <a
           mat-list-item
-          routerLink="/settings"
+          routerLink="settings"
           routerLinkActive="active-list-item"
           >Ajustes
         </a>
@@ -67,6 +63,15 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
 
       .app-drawer {
         width: 230px;
+        @apply bg-sky-700 border-none;
+      }
+
+      .mat-mdc-list-item {
+        @apply text-white;
+      }
+
+      .active-list-item {
+        @apply bg-sky-600 rounded;
       }
     `,
   ],

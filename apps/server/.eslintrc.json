@@ -13,7 +13,7 @@
               "accessors": "off",
               "constructors": "no-public",
               "methods": "explicit",
-              "properties": "explicit",
+              "properties": "off",
               "parameterProperties": "explicit"
             }
           }

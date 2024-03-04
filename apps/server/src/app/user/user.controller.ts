@@ -11,9 +11,9 @@ import { ApiTags } from '@nestjs/swagger';
 import { DeleteResult } from 'typeorm';
 
 import { Public } from '../auth/public.decorator';
+import { User } from '../entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
 import { UserService } from './user.service';
 
 @ApiTags('users')

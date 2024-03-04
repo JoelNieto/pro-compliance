@@ -3,9 +3,9 @@ import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
 import { DeleteResult, Repository } from 'typeorm';
 
+import { User } from '../entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { User } from './entities/user.entity';
 
 @Injectable()
 export class UserService {
@@ -38,9 +38,9 @@ export class UserService {
     updateUserDto: UpdateUserDto;
   }): Promise<User> {
     let user: User = new User();
-    const { user_name, email, password } = updateUserDto;
+    const { user_name, email } = updateUserDto;
 
-    user = { ...user, user_name, email, password, id };
+    user = { ...user, user_name, email, id };
     return this.userRepository.save(user);
   }
 

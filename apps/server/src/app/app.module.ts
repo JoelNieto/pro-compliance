@@ -4,7 +4,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { User } from './user/entities/user.entity';
+import { CountriesModule } from './countries/countries.module';
+import { Country } from './entities/countries.entity';
+import { Participant } from './entities/participant.entity';
+import { User } from './entities/user.entity';
+import { ParticipantsModule } from './participants/participants.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -14,13 +18,15 @@ import { UserModule } from './user/user.module';
       host: 'localhost',
       port: 5432,
       username: 'joelnieto',
-      entities: [User],
+      entities: [User, Country, Participant],
       database: 'pro-compliance',
       synchronize: true,
       logging: true,
     }),
     UserModule,
     AuthModule,
+    ParticipantsModule,
+    CountriesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
