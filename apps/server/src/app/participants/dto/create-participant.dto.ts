@@ -1,11 +1,13 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsDateString,
+  IsDate,
   IsEmail,
   IsNotEmpty,
+  IsObject,
   IsString,
-  IsUUID,
 } from 'class-validator';
+
+import { Country } from '../../entities/countries.entity';
 
 export class CreateParticipantDto {
   @ApiProperty({ required: true })
@@ -17,6 +19,10 @@ export class CreateParticipantDto {
   @IsString()
   @IsNotEmpty()
   last_name: string;
+
+  @ApiProperty({ required: true })
+  @IsString()
+  address: string;
 
   @ApiProperty({ required: true })
   @IsString()
@@ -32,18 +38,18 @@ export class CreateParticipantDto {
   gender: string;
 
   @ApiProperty()
-  @IsDateString()
+  @IsDate()
   birth_date: Date;
 
   @ApiProperty()
-  @IsUUID()
-  birth_country_id: string;
+  @IsObject()
+  birth_country_id: Country;
 
   @ApiProperty()
-  @IsUUID()
-  residence_country_id: string;
+  @IsObject()
+  residence_country: Country;
 
   @ApiProperty()
-  @IsUUID()
-  nationality_country_id: string;
+  @IsObject()
+  nationality: Country;
 }

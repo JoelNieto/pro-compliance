@@ -1,8 +1,10 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+
+import { AppStore } from '../../app.store';
 
 @Component({
   selector: 'pro-compliance-dashboard',
@@ -43,8 +45,10 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
       </mat-list>
     </mat-drawer>
 
-    <mat-drawer-content class="app-content"
-      ><router-outlet />
+    <mat-drawer-content class="flex w-full h-full p-8 justify-center"
+      ><div class="w-full max-w-7xl">
+        <router-outlet />
+      </div>
     </mat-drawer-content>
   </mat-drawer-container>`,
   styles: [
@@ -52,13 +56,6 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
       .dashboard-container {
         height: 100%;
         margin: 0%;
-      }
-
-      .app-content {
-        display: flex;
-        height: 100%;
-        align-items: center;
-        justify-content: center;
       }
 
       .app-drawer {
@@ -77,4 +74,6 @@ import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DashboardComponent {}
+export class DashboardComponent {
+  public appStore = inject(AppStore);
+}

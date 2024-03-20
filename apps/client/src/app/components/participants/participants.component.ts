@@ -1,26 +1,15 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { MatCardModule } from '@angular/material/card';
+import { RouterOutlet } from '@angular/router';
 
 import { ParticipantStore } from './participants.store';
 
 @Component({
   selector: 'pro-compliance-participants',
   standalone: true,
-  imports: [MatCardModule],
+  imports: [RouterOutlet],
   providers: [ParticipantStore],
-  template: `<mat-card>
-    <mat-card-header>
-      <mat-card-title>Participantes</mat-card-title>
-    </mat-card-header>
-    <mat-card-content></mat-card-content>
-  </mat-card>`,
-  styles: [
-    `
-      mat-card {
-        width: 60vw;
-      }
-    `,
-  ],
+  template: `<router-outlet />`,
+  styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ParticipantsComponent {

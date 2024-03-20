@@ -4,36 +4,42 @@ export const appRoutes: Route[] = [
   {
     path: '',
     loadComponent: () =>
-      import('./sign-in/sign-in.component').then((x) => x.SignInComponent),
+      import('./components/sign-in/sign-in.component').then(
+        (x) => x.SignInComponent
+      ),
   },
   {
     path: 'app',
     loadComponent: () =>
-      import('./dashboard/dashboard.component').then(
+      import('./components/dashboard/dashboard.component').then(
         (x) => x.DashboardComponent
       ),
     children: [
       {
         path: 'home',
         loadComponent: () =>
-          import('./home/home.component').then((x) => x.HomeComponent),
+          import('./components/home/home.component').then(
+            (x) => x.HomeComponent
+          ),
       },
       {
         path: 'reports',
         loadComponent: () =>
-          import('./reports/reports.component').then((x) => x.ReportsComponent),
+          import('./components/reports/reports.component').then(
+            (x) => x.ReportsComponent
+          ),
       },
       {
         path: 'participants',
-        loadComponent: () =>
-          import('./participants/participants.component').then(
-            (x) => x.ParticipantsComponent
+        loadChildren: () =>
+          import('./components/participants/participants.routes').then(
+            (x) => x.PARTICIPANTS_ROUTES
           ),
       },
       {
         path: 'settings',
         loadComponent: () =>
-          import('./settings/settings.component').then(
+          import('./components/settings/settings.component').then(
             (x) => x.SettingsComponent
           ),
       },

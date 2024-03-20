@@ -14,12 +14,14 @@ export class ParticipantsService {
   ) {}
   public create(
     createParticipantDto: CreateParticipantDto
-  ): Promise<CreateParticipantDto & Participant> {
+  ): Promise<Participant> {
     return this.participantRepository.save(createParticipantDto);
   }
 
   public findAll(): Promise<Participant[]> {
-    return this.participantRepository.find();
+    return this.participantRepository.find({
+      relations: ['birth_country', 'residence_country', 'nationality'],
+    });
   }
 
   public findOne(id: string): Promise<Participant> {

@@ -3,16 +3,27 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 
 import { Country } from './countries.entity';
+import { Society } from './society.entity';
 import { User } from './user.entity';
 
 @Entity({ name: 'participants' })
 export class Participant {
   @PrimaryGeneratedColumn('uuid')
   id: string;
+
+  @Column({ type: 'varchar', nullable: true, length: 100 })
+  code: string;
+
+  @Column({ type: 'boolean', default: false })
+  is_pep: boolean;
+
+  @Column({ type: 'varchar', length: 100, nullable: true })
+  legal_representative: string;
 
   @Column({ nullable: false, type: 'varchar', length: 100 })
   first_name: string;
@@ -32,6 +43,9 @@ export class Participant {
   @Column({ type: 'date' })
   birth_date: Date;
 
+  @Column({ type: 'text' })
+  address: string;
+
   @ManyToOne(() => Country)
   @JoinColumn({ name: 'residence_country_id', referencedColumnName: 'id' })
   residence_country: Country;
@@ -41,8 +55,11 @@ export class Participant {
   birth_country: Country;
 
   @ManyToOne(() => Country)
-  @JoinColumn({ name: 'nationality_id', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'nationality_country_id', referencedColumnName: 'id' })
   nationality: Country;
+
+  @OneToMany(() => Society, (society) => society.owner)
+  societies: Society[];
 
   @Column({ type: 'timestamptz', default: () => 'CURRENT_TIMESTAMP' })
   created_at: Date;

@@ -7,8 +7,10 @@ import { AuthModule } from './auth/auth.module';
 import { CountriesModule } from './countries/countries.module';
 import { Country } from './entities/countries.entity';
 import { Participant } from './entities/participant.entity';
+import { Society } from './entities/society.entity';
 import { User } from './entities/user.entity';
 import { ParticipantsModule } from './participants/participants.module';
+import { SocietiesModule } from './societies/societies.module';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -18,7 +20,7 @@ import { UserModule } from './user/user.module';
       host: 'localhost',
       port: 5432,
       username: 'joelnieto',
-      entities: [User, Country, Participant],
+      entities: [User, Country, Participant, Society],
       database: 'pro-compliance',
       synchronize: true,
       logging: true,
@@ -27,6 +29,7 @@ import { UserModule } from './user/user.module';
     AuthModule,
     ParticipantsModule,
     CountriesModule,
+    SocietiesModule,
   ],
   controllers: [AppController],
   providers: [AppService],
