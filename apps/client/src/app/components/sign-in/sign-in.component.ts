@@ -9,7 +9,7 @@ import { MatInputModule } from '@angular/material/input';
   standalone: true,
   imports: [MatCardModule, MatFormFieldModule, MatInputModule, MatButtonModule],
   template: `<div
-    class="flex flex-col items-center justify-center w-full h-dvh bg-gray-50"
+    class="flex flex-col items-center justify-center w-full h-dvh"
   >
     <mat-card class="w-96">
       <mat-card-header>

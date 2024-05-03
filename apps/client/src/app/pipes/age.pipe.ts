@@ -7,8 +7,8 @@ import { es } from 'date-fns/locale';
   standalone: true,
 })
 export class AgePipe implements PipeTransform {
-  public transform(value: Date): string {
-    return formatDistanceToNowStrict(value, {
+  public transform(value: Date | undefined): string {
+    return formatDistanceToNowStrict(value ?? new Date(), {
       locale: es,
       unit: 'year',
       roundingMethod: 'floor',

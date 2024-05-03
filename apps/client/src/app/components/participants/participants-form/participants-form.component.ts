@@ -1,4 +1,3 @@
-import { DIALOG_DATA, DialogRef } from '@angular/cdk/dialog';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -22,6 +21,8 @@ import { Country, Participant } from '@pro-compliance/models';
 
 import { AppStore } from '../../../app.store';
 import { ParticipantStore } from '../participants.store';
+import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBar } from '@angular/material/progress-bar';
 
 @Component({
   selector: 'pro-compliance-participants-form',
@@ -35,111 +36,112 @@ import { ParticipantStore } from '../participants.store';
     FormsModule,
     ReactiveFormsModule,
     MatSelectModule,
+    MatDialogModule,
+    MatProgressBar,
   ],
-  template: `<form
-    [formGroup]="form"
-    (ngSubmit)="saveChanges()"
-    class="w-full flex flex-col rounded bg-white p-6"
-  >
-    <div class="flex justify-between items-center">
-      <h2 class="text-2xl font-semibold">Datos del participante</h2>
-      <button mat-icon-button type="button" (click)="dialogRef.close()">
-        <mat-icon>close</mat-icon>
-      </button>
-    </div>
-    <div class="grid lg:grid-cols-4 py-4 gap-4">
-      <mat-form-field class="col-span-2">
-        <mat-label>Nombres</mat-label>
-        <input
-          type="text"
-          matInput
-          formControlName="first_name"
-          placeholder="Nombre participante"
-        />
-      </mat-form-field>
-      <mat-form-field class="col-span-2">
-        <mat-label>Apellidos</mat-label>
-        <input type="text" formControlName="last_name" matInput />
-      </mat-form-field>
-      <mat-form-field class="col-span-2">
-        <mat-label>Direccion</mat-label>
-        <input type="text" formControlName="address" matInput />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Email</mat-label>
-        <input type="email" formControlName="email" matInput />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Nro. Documento</mat-label>
-        <input type="text" formControlName="document_id" matInput />
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Fec. nacimiento</mat-label>
-        <input matInput [matDatepicker]="picker" formControlName="birth_date" />
-        <mat-hint>DD/MM/AAAA</mat-hint>
-        <mat-datepicker-toggle
-          matIconSuffix
-          [for]="picker"
-        ></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Pais de residencia</mat-label>
-        <mat-select
-          formControlName="residence_country"
-          [compareWith]="compareFn"
-        >
-          @for(country of appStore.countries(); track country.id ) {
-          <mat-option [value]="country">{{ country.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Pais de nacimiento</mat-label>
-        <mat-select formControlName="birth_country" [compareWith]="compareFn">
-          @for(country of appStore.countries(); track country.id ) {
-          <mat-option [value]="country">{{ country.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Nacionalidad</mat-label>
-        <mat-select formControlName="nationality" [compareWith]="compareFn">
-          @for(country of appStore.countries(); track country.id ) {
-          <mat-option [value]="country">{{ country.name }}</mat-option>
-          }
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Genero</mat-label>
-        <mat-select formControlName="gender">
-          <mat-option value="female">Femenino</mat-option>
-          <mat-option value="male">Masculino</mat-option>
-          <mat-option value="nb">N/B</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="flex justify-end">
-      <button
-        type="submit"
-        [disabled]="form.invalid"
-        mat-flat-button
-        color="accent"
-      >
-        Guardar cambios
-      </button>
-    </div>
-  </form>`,
+  template: `
+    <form [formGroup]="form" (ngSubmit)="saveChanges()">
+      @if (store.loading()) {
+      <mat-progress-bar mode="indeterminate" />
+      }
+      <h2 mat-dialog-title>Datos del participante</h2>
+      <mat-dialog-content class="grid lg:grid-cols-4 py-4 gap-4">
+        <mat-form-field class="col-span-2">
+          <mat-label>Nombres</mat-label>
+          <input
+            type="text"
+            matInput
+            formControlName="first_name"
+            placeholder="Nombre participante"
+          />
+        </mat-form-field>
+        <mat-form-field class="col-span-2">
+          <mat-label>Apellidos</mat-label>
+          <input type="text" formControlName="last_name" matInput />
+        </mat-form-field>
+        <mat-form-field class="col-span-2">
+          <mat-label>Direccion</mat-label>
+          <input type="text" formControlName="address" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Email</mat-label>
+          <input type="email" formControlName="email" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Nro. Documento</mat-label>
+          <input type="text" formControlName="document_id" matInput />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Fec. nacimiento</mat-label>
+          <input
+            matInput
+            [matDatepicker]="picker"
+            formControlName="birth_date"
+          />
+          <mat-hint>DD/MM/AAAA</mat-hint>
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Pais de residencia</mat-label>
+          <mat-select
+            formControlName="residence_country"
+            [compareWith]="compareFn"
+          >
+            @for (country of appStore.countries(); track country.id) {
+            <mat-option [value]="country">{{ country.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Pais de nacimiento</mat-label>
+          <mat-select formControlName="birth_country" [compareWith]="compareFn">
+            @for (country of appStore.countries(); track country.id) {
+            <mat-option [value]="country">{{ country.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Nacionalidad</mat-label>
+          <mat-select formControlName="nationality" [compareWith]="compareFn">
+            @for (country of appStore.countries(); track country.id) {
+            <mat-option [value]="country">{{ country.name }}</mat-option>
+            }
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Genero</mat-label>
+          <mat-select formControlName="gender">
+            <mat-option value="female">Femenino</mat-option>
+            <mat-option value="male">Masculino</mat-option>
+            <mat-option value="nb">N/B</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-dialog-content>
+      <mat-dialog-actions>
+        <button type="button" mat-stroked-button mat-dialog-close>
+          <mat-icon>close</mat-icon>
+          Cancelar
+        </button>
+        <button type="submit" [disabled]="form.invalid" mat-flat-button>
+          <mat-icon>save</mat-icon>
+          Guardar cambios
+        </button>
+      </mat-dialog-actions>
+    </form>
+  `,
   styles: ``,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ParticipantsFormComponent implements OnInit {
   public appStore = inject(AppStore);
-  private store = inject(ParticipantStore);
+  public store = inject(ParticipantStore);
 
   private data: { participant: Participant | undefined } | undefined =
-    inject(DIALOG_DATA);
-  public dialogRef = inject(DialogRef);
+    inject(MAT_DIALOG_DATA);
 
   public form = new FormGroup({
     first_name: new FormControl('', {

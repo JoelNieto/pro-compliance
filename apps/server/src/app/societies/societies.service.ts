@@ -15,8 +15,19 @@ export class SocietiesService {
     return this.societyRepo.save(createSocietyDto);
   }
 
-  public findAll(): Promise<Society[]> {
-    return this.societyRepo.find();
+  public findAll(participant?: string): Promise<Society[]> {
+    if (!participant) {
+      return this.societyRepo.find({ relations: ['owner', 'jurisdiction'] });
+    }
+
+    return this.societyRepo.find({
+      relations: ['owner', 'jurisdiction'],
+      where: {
+        owner: {
+          id: participant,
+        },
+      },
+    });
   }
 
   public findOne(id: string): Promise<Society> {

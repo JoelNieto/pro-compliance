@@ -13,7 +13,7 @@ import {
 } from '@ngrx/signals';
 import { rxMethod } from '@ngrx/signals/rxjs-interop';
 import { Participant } from '@pro-compliance/models';
-import { pipe, switchMap, tap } from 'rxjs';
+import { exhaustMap, pipe, tap } from 'rxjs';
 
 type State = {
   participants: Participant[];
@@ -44,35 +44,39 @@ export const ParticipantStore = signalStore(
       const fetchItems = rxMethod<void>(
         pipe(
           tap(() => patchState(state, { loading: true })),
-          switchMap(() => http.get<Participant[]>('/api/participants')),
-          tapResponse({
-            next: (participants) => patchState(state, { participants }),
-            error: console.error,
-            finalize: () => patchState(state, { loading: false }),
-          })
+          exhaustMap(() =>
+            http.get<Participant[]>('/api/participants').pipe(
+              tapResponse({
+                next: (participants) => patchState(state, { participants }),
+                error: console.error,
+                finalize: () => patchState(state, { loading: false }),
+              })
+            )
+          )
         )
       );
 
       const createParticipant = rxMethod<Partial<Participant>>(
         pipe(
           tap(() => patchState(state, { loading: true })),
-          switchMap((request) =>
-            http.post<Participant>('/api/participants', request)
-          ),
-          tapResponse({
-            next: (response) => {
-              snackBar.open('Participante creado exitosamente');
-              dialog.closeAll();
-              patchState(state, {
-                participants: [...state.participants(), response],
-              });
-            },
-            error: (error) => {
-              console.error(error);
-              snackBar.open('Algo salio mal');
-            },
-            finalize: () => patchState(state, { loading: false }),
-          })
+          exhaustMap((request) =>
+            http.post<Participant>('/api/participants', request).pipe(
+              tapResponse({
+                next: (response) => {
+                  snackBar.open('Participante creado exitosamente');
+                  dialog.closeAll();
+                  patchState(state, {
+                    participants: [...state.participants(), response],
+                  });
+                },
+                error: (error) => {
+                  console.error(error);
+                  snackBar.open('Algo salio mal');
+                },
+                finalize: () => patchState(state, { loading: false }),
+              })
+            )
+          )
         )
       );
 
@@ -82,44 +86,48 @@ export const ParticipantStore = signalStore(
       }>(
         pipe(
           tap(() => patchState(state, { loading: true })),
-          switchMap(({ id, request }) =>
-            http.patch<Participant>(`/api/participants/${id}`, request)
-          ),
-          tapResponse({
-            next: (response) => {
-              snackBar.open('Participante actualizado exitosamente');
-              dialog.closeAll();
-              patchState(state, {
-                participants: state
-                  .participants()
-                  .map((x) => (x.id === response.id ? response : x)),
-              });
-            },
-            error: (error) => {
-              console.error(error);
-              snackBar.open('Algo salio mal');
-            },
-            finalize: () => patchState(state, { loading: false }),
-          })
+          exhaustMap(({ id, request }) =>
+            http.patch<Participant>(`/api/participants/${id}`, request).pipe(
+              tapResponse({
+                next: (response) => {
+                  snackBar.open('Participante actualizado exitosamente');
+                  dialog.closeAll();
+                  patchState(state, {
+                    participants: state
+                      .participants()
+                      .map((x) => (x.id === response.id ? response : x)),
+                  });
+                },
+                error: (error) => {
+                  console.error(error);
+                  snackBar.open('Algo salio mal');
+                },
+                finalize: () => patchState(state, { loading: false }),
+              })
+            )
+          )
         )
       );
 
       const deleteParticipant = rxMethod<string>(
         pipe(
           tap(() => patchState(state, { loading: true })),
-          switchMap((id) => http.delete<void>(`/api/participants/${id}`)),
-          tapResponse({
-            next: () => {
-              snackBar.open('Participante eliminado exitosamente');
-              dialog.closeAll();
-              fetchItems();
-            },
-            error: (error) => {
-              console.error(error);
-              snackBar.open('Algo salio mal');
-            },
-            finalize: () => patchState(state, { loading: false }),
-          })
+          exhaustMap((id) =>
+            http.delete<void>(`/api/participants/${id}`).pipe(
+              tapResponse({
+                next: () => {
+                  snackBar.open('Participante eliminado exitosamente');
+                  dialog.closeAll();
+                  fetchItems();
+                },
+                error: (error) => {
+                  console.error(error);
+                  snackBar.open('Algo salio mal');
+                },
+                finalize: () => patchState(state, { loading: false }),
+              })
+            )
+          )
         )
       );
       return {

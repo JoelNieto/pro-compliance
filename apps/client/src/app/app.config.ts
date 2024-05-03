@@ -14,6 +14,7 @@ import {
 import { es } from 'date-fns/locale';
 
 import { appRoutes } from './app.routes';
+import { MAT_DIALOG_DEFAULT_OPTIONS } from '@angular/material/dialog';
 
 registerLocaleData(localeEs, 'es-MX');
 
@@ -21,7 +22,14 @@ export const appConfig: ApplicationConfig = {
   providers: [
     { provide: LOCALE_ID, useValue: 'es-MX' },
     { provide: MAT_DATE_LOCALE, useValue: es },
-    { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 3000 } },
+    {
+      provide: MAT_SNACK_BAR_DEFAULT_OPTIONS,
+      useValue: { duration: 3000, verticalPosition: 'top' },
+    },
+    {
+      provide: MAT_DIALOG_DEFAULT_OPTIONS,
+      useValue: { disableClose: true, maxWidth: '90vw' },
+    },
     provideHttpClient(),
     provideRouter(
       appRoutes,
