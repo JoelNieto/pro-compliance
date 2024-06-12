@@ -7,12 +7,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Flex:wght@300;400;600;700&family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap');
 
-$light-theme: matx.define-theme(
+$light-theme: mat.define-theme(
     (
       color: (
         theme-type: light,
-        primary: matx.$m3-azure-palette,
-        tertiary: matx.$m3-cyan-palette,
+        primary: mat.$azure-palette,
+        tertiary: mat.$cyan-palette,
       ),
       typography: (
         brand-family: 'Roboto Flex',
@@ -30,7 +30,7 @@ html,
 body {
   height: 100%;
   @include mat.all-component-themes($light-theme);
-  @include matx.color-variants-back-compat($light-theme);
+  @include mat.color-variants-backwards-compatibility($light-theme);
   @include mat.typography-hierarchy($light-theme);
 }
 

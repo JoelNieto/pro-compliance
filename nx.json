@@ -65,5 +65,6 @@
       "inlineTemplate": true,
       "changeDetection": "OnPush"
     }
-  }
+  },
+  "nxCloudAccessToken": "ZTg1MTFjODgtN2QwMC00NjkxLWI4OWQtYTI2MDQzNjE4ZWZmfHJlYWQtd3JpdGU="
 }
