@@ -82,7 +82,7 @@ import { MatDialog } from '@angular/material/dialog';
             <mat-icon>more_vert</mat-icon>
           </button>
           <mat-menu #menu="matMenu">
-            <a mat-menu-item [routerLink]="['/app/participants', item.id]">
+            <a mat-menu-item [routerLink]="['/participants', item.id]">
               <mat-icon color="primary">feed</mat-icon>
               <span>Detalles</span>
             </a>

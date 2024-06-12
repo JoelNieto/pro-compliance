@@ -25,7 +25,7 @@ export const SocietiesStore = signalStore(
           map(() =>
             state.participantId()
               ? `/api/societies?participant=${state.participantId()}`
-              : '/api/societies?participant'
+              : '/api/societies'
           ),
           switchMap((url) => http.get<Society[]>(url)),
           tapResponse({

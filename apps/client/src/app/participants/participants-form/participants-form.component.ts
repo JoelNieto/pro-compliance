@@ -19,10 +19,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Country, Participant } from '@pro-compliance/models';
 
-import { AppStore } from '../../../app.store';
 import { ParticipantStore } from '../participants.store';
 import { MAT_DIALOG_DATA, MatDialogModule } from '@angular/material/dialog';
 import { MatProgressBar } from '@angular/material/progress-bar';
+import { AppStore } from '../../app.store';
 
 @Component({
   selector: 'pro-compliance-participants-form',

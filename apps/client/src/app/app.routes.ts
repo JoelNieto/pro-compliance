@@ -2,44 +2,45 @@ import { Route } from '@angular/router';
 
 export const appRoutes: Route[] = [
   {
-    path: '',
+    path: 'sign-in',
     loadComponent: () =>
-      import('./components/sign-in/sign-in.component').then(
-        (x) => x.SignInComponent
-      ),
+      import('./sign-in/sign-in.component').then((x) => x.SignInComponent),
   },
   {
-    path: 'app',
+    path: '',
     loadComponent: () =>
-      import('./components/dashboard/dashboard.component').then(
+      import('./dashboard/dashboard.component').then(
         (x) => x.DashboardComponent
       ),
     children: [
       {
         path: 'home',
         loadComponent: () =>
-          import('./components/home/home.component').then(
-            (x) => x.HomeComponent
+          import('./home/home.component').then((x) => x.HomeComponent),
+      },
+      {
+        path: 'societies',
+        loadComponent: () =>
+          import('./societies/societies.component').then(
+            (x) => x.SocietiesComponent
           ),
       },
       {
         path: 'reports',
         loadComponent: () =>
-          import('./components/reports/reports.component').then(
-            (x) => x.ReportsComponent
-          ),
+          import('./reports/reports.component').then((x) => x.ReportsComponent),
       },
       {
         path: 'participants',
         loadChildren: () =>
-          import('./components/participants/participants.routes').then(
+          import('./participants/participants.routes').then(
             (x) => x.PARTICIPANTS_ROUTES
           ),
       },
       {
         path: 'settings',
         loadComponent: () =>
-          import('./components/settings/settings.component').then(
+          import('./settings/settings.component').then(
             (x) => x.SettingsComponent
           ),
       },

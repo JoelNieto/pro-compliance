@@ -10,7 +10,6 @@ import {
 import { MatTabsModule } from '@angular/material/tabs';
 import { patchState } from '@ngrx/signals';
 
-import { AgePipe } from '../../../pipes/age.pipe';
 import { SocietiesComponent } from '../../societies/societies.component';
 import { ParticipantStore } from '../participants.store';
 import { MatButtonModule } from '@angular/material/button';
@@ -19,6 +18,7 @@ import { RouterLink } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ParticipantsFormComponent } from '../participants-form/participants-form.component';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
+import { AgePipe } from '../../pipes/age.pipe';
 
 @Component({
   selector: 'pro-compliance-participant-details',
@@ -41,7 +41,7 @@ import { MatProgressSpinner } from '@angular/material/progress-spinner';
       <h2 class="mat-headline-large">
         {{ store.selected()?.first_name }} {{ store.selected()?.last_name }}
       </h2>
-      <button mat-flat-button color="accent" (click)="editParticipant()">
+      <button mat-stroked-button color="accent" (click)="editParticipant()">
         <mat-icon>edit</mat-icon>
         Editar
       </button>

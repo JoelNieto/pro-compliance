@@ -19,9 +19,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { Country, Society } from '@pro-compliance/models';
 
-import { AppStore } from '../../app.store';
 import { SocietiesStore } from '../societies/societies.store';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AppStore } from '../app.store';
 
 @Component({
   selector: 'pro-compliance-societies-form',

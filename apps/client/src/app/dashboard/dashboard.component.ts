@@ -14,8 +14,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
-
-import { AppStore } from '../../app.store';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'pro-compliance-dashboard',
@@ -30,6 +29,7 @@ import { AppStore } from '../../app.store';
     RouterLink,
     RouterLinkActive,
     MatSidenavModule,
+    MatTooltip,
     NgClass,
   ],
   template: `
@@ -56,6 +56,8 @@ import { AppStore } from '../../app.store';
             routerLinkActive
             #home="routerLinkActive"
             [activated]="home.isActive"
+            matTooltip="Inicio"
+            matTooltipPosition="right"
           >
             <mat-icon matListItemIcon>home</mat-icon> @if (!isCollapsed()) {
             <div matListItemTitle>Inicio</div>
@@ -67,10 +69,25 @@ import { AppStore } from '../../app.store';
             routerLinkActive
             #participants="routerLinkActive"
             [activated]="participants.isActive"
+            matTooltip="Participantes"
+            matTooltipPosition="right"
           >
             <mat-icon matListItemIcon>group</mat-icon>
             @if (!isCollapsed()) {
             <div matListItemTitle>Participantes</div>
+            } </a
+          ><a
+            mat-list-item
+            routerLink="societies"
+            routerLinkActive
+            #societies="routerLinkActive"
+            [activated]="societies.isActive"
+            matTooltip="Sociedades"
+            matTooltipPosition="right"
+          >
+            <mat-icon matListItemIcon>domain</mat-icon>
+            @if (!isCollapsed()) {
+            <div matListItemTitle>Sociedades</div>
             }
           </a>
           <a
@@ -113,11 +130,10 @@ import { AppStore } from '../../app.store';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DashboardComponent implements OnInit {
-  public appStore = inject(AppStore);
   public sidenav = viewChild.required(MatSidenav);
   private observer = inject(BreakpointObserver);
   public isMobile = signal(true);
-  public isCollapsed = signal(false);
+  public isCollapsed = signal(true);
 
   public ngOnInit(): void {
     this.observer.observe(['(max-width: 800px)']).subscribe((screenSize) => {
